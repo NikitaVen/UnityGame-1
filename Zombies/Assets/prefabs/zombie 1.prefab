@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5552939338570719966}
   - component: {fileID: 5552939338570719962}
   - component: {fileID: 5552939338570719957}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: zombie 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &5552939338570719966
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &5552939338570719962
 Animator:
@@ -164,5 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad7e8e78aceee04490761042f7abe5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   player: {fileID: 0}
   speed: 0.05
+  wait: 1
