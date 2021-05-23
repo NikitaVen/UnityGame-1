@@ -13,6 +13,9 @@ public class zombiebehavior : MonoBehaviour
     private Animator animator;
     private Material matBlink;
     private Material matDefault;
+    private Vector3 move;
+    bool coll = false;
+
 
     private float timeShot;
     public float wait = 1;
@@ -33,23 +36,37 @@ public class zombiebehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
+
+
         if (timeShot <= 0)
         {
-            if (dead)
-                Destroy(gameObject);
-            float x = player.position.x - rb.position.x;
-            float y = player.position.y - rb.position.y;
-            if (Math.Pow(x * x + y * y, 0.5) > 0.5)
+            if (!coll)
             {
-                float cos = x / (float)Math.Pow(x * x + y * y, 0.5);
-                float sin = y / (float)Math.Pow(x * x + y * y, 0.5);
-                animator.SetFloat("moveX", cos);
-                animator.SetFloat("moveY", sin);
-                animator.SetBool("moving", true);
-                transform.Translate(speed * cos, speed * sin, 0);
+                if (dead)
+                    Destroy(gameObject);
+                float x = player.transform.position.x - rb.transform.position.x;
+                float y = player.transform.position.y - rb.transform.position.y;
+                if (!coll)
+                {
+                    float cos = x / (float)Math.Pow(x * x + y * y, 0.5);
+                    float sin = y / (float)Math.Pow(x * x + y * y, 0.5);
+                    animator.SetFloat("moveX", cos);
+                    animator.SetFloat("moveY", sin);
+                    animator.SetBool("moving", true);
+
+                    move = new Vector3(speed * cos, speed * sin, 0);
+                      transform.Translate(move);
+                   // rb.MovePosition(move);
+
+                }
+                else
+                    animator.SetBool("moving", false);
             }
             else
+            {
                 animator.SetBool("moving", false);
+                //тут анмация атаки игрока может быть
+            }
         }
         else
         {
@@ -71,4 +88,24 @@ public class zombiebehavior : MonoBehaviour
 
     }
 
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.collider.name.Contains("player"))
+            coll = true;
+
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.name.Contains("player"))  
+            coll = true;
+    }
+
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        coll = false;
+    }
 }

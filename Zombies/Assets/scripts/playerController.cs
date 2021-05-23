@@ -9,8 +9,19 @@ public class playerController : MonoBehaviour
     private Vector2 motion;
     private bool col = false;
 
+    public float health = 10f;
+
+
+    //public LayerMask enemy;
+    //public LayerMask wall;
+    //public float collRadiusWall;
+    //public float collRadiusEnemy;
+
+    public Rigidbody2D enemy;
 
     private Animator animator;
+
+    bool coll = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +37,12 @@ public class playerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+
+     
+       
+
+       
+
         float X = 0;
         float Y = 0;
         if (Input.GetKey(KeyCode.A))
@@ -49,9 +66,13 @@ public class playerController : MonoBehaviour
             animator.SetFloat("moveX", X);
             animator.SetFloat("moveY", Y);
             animator.SetBool("moving", true);
-            if(!col)
-            transform.Translate(X, Y, 0);
-           
+
+            if (!coll)
+                 transform.Translate(X, Y, 0);
+                //rb.MovePosition(transform.position + new Vector3(X, Y, 0));
+
+
+
         }
         else
             animator.SetBool("moving", false);
@@ -62,6 +83,14 @@ public class playerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        col = true;
+        if (collision.collider.name.Contains("zombie"))
+            health -= 10;
+
+       // coll = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+       // coll = false;
     }
 }
