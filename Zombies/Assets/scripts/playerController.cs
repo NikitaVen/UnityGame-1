@@ -49,7 +49,7 @@ public class playerController : MonoBehaviour
             animator.SetFloat("moveX", X);
             animator.SetFloat("moveY", Y);
             animator.SetBool("moving", true);
-            if(!col)
+        //    if(!col)
             transform.Translate(X, Y, 0);
            
         }
