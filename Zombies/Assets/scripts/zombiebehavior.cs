@@ -7,19 +7,21 @@ using UnityEngine;
 public class zombiebehavior : MonoBehaviour
 {
     public float health;
+    private float MaxHealth;
     private Rigidbody2D rb;
     public Rigidbody2D player;
     public float speed;
     private Animator animator;
     private Material matBlink;
     private Material matDefault;
-
+    public HealthBar bar;
     private float timeShot;
     public float wait = 1;
     bool dead;
     // Start is called before the first frame update
     void Start()
     {
+        MaxHealth = health;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         dead = false;
@@ -61,6 +63,7 @@ public class zombiebehavior : MonoBehaviour
 
     public void Damage(float damage)
     {
+        bar.fill = (health - damage) / MaxHealth;
         health -= damage;
         timeShot = wait;
         if (health <= 0)
