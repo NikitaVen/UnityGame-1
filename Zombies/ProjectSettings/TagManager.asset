@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
+  - Heal
+  - Bullets
   layers:
   - Default
   - TransparentFX
