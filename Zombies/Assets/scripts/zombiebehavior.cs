@@ -39,6 +39,9 @@ public class zombiebehavior : MonoBehaviour
         timeShot = 0;
         damage_wait = 0;
         damage_timer = 0;
+        GameObject pl = GameObject.Find("player");
+        pl_contr = pl.GetComponent<playerController>();
+        player = pl.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame

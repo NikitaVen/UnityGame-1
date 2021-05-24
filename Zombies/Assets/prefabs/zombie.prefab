@@ -74,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 909598343
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 3471414262902695032, guid: 2f7823806b4262f409f69ecd2aa16253, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -173,9 +173,9 @@ MonoBehaviour:
   pl_contr: {fileID: 0}
   player: {fileID: 0}
   speed: 0.03
-  damage_wait: 0
-  damage_wait_wait: 0
-  damage_timer_wait: 0
+  damage_wait: 0.5
+  damage_wait_wait: 0.5
+  damage_timer_wait: 0.5
   bar: {fileID: 3063616293529198937}
   wait: 1
 --- !u!114 &3063616293529198937
