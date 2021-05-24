@@ -29,7 +29,7 @@ public class Wearon : MonoBehaviour
                 bulletAmount = value;
                 ammunationtxt.color = Color.green;
             }
-                ammunationtxt.text = $"Ammunation: {bulletAmount}";
+                ammunationtxt.text = $"Патроны: {bulletAmount}";
         }
         get
         {
@@ -62,7 +62,7 @@ public class Wearon : MonoBehaviour
                 Instantiate(bullet, shotDirection.position, transform.rotation);
                 timeShot = wait;
                 BulletAmount --;
-                ammunationtxt.text = $"Ammunation: {bulletAmount}";
+               // ammunationtxt.text = $"Ammunation: {bulletAmount}";
                
             }
 
