@@ -85,7 +85,8 @@ public class Generator : MonoBehaviour
                     pitMap.SetTile(pos, pitTile);
                     if (tileBelow != null)
                     {
-
+                        wallMap.SetTile(pos, topWallTile);
+                        groundMap.SetTile(posBelow, shadowTile);
 
 
                         if (!exitspawned)
@@ -94,12 +95,6 @@ public class Generator : MonoBehaviour
                             GenerateSquare(pos.x, pos.y, 1);
                             GenerateExit(pos.x, pos.y);
                             exitspawned = true;
-                        }
-                        else
-                        {
-                            wallMap.SetTile(pos, topWallTile);
-                            groundMap.SetTile(posBelow, shadowTile);
-
                         }
 
 
