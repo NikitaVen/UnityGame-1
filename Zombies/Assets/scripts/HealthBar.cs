@@ -8,6 +8,7 @@ public class HealthBar : MonoBehaviour
 
     public Image bar;
     public float fill;
+    zombiebehavior zombie;
     // Start is called before the first frame update
     void Start()
     {
