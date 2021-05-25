@@ -15,7 +15,7 @@ public class playerController : MonoBehaviour
     public float health;
     private float MaxHealth;
     public float speed;
-    private bool isDead = false;
+    public bool isDead = false;
     private float wait = 0.5f;
     public float Health
     {
