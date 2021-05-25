@@ -104,6 +104,7 @@ public class playerController : MonoBehaviour
         if (health <= 0)
         {
             Instantiate(Death_effect, transform.position, Quaternion.identity);
+            Camera cam = gameObject.GetComponent<Camera>();
             Destroy(gameObject);
         }
         else
