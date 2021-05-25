@@ -17,6 +17,7 @@ public class zombiebehavior : MonoBehaviour
     public Rigidbody2D player;
     public float speed;
     private Animator animator;
+    private float slowSpeed ;
 
     public float damage_wait;
     private float damage_timer;
@@ -44,7 +45,7 @@ public class zombiebehavior : MonoBehaviour
         GameObject pl = GameObject.Find("player");
         pl_contr = pl.GetComponent<playerController>();
         player = pl.GetComponent<Rigidbody2D>();
-
+        slowSpeed =  speed / 2;
     }
 
     // Update is called once per frame
@@ -54,6 +55,8 @@ public class zombiebehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
+
+
         if (timeShot <= 0)
         {
             //if (dead)
@@ -66,13 +69,30 @@ public class zombiebehavior : MonoBehaviour
                 {
                     float cos = x / (float)Math.Pow(x * x + y * y, 0.5);
                     float sin = y / (float)Math.Pow(x * x + y * y, 0.5);
-                    animator.SetFloat("moveX", cos);
-                    animator.SetFloat("moveY", sin);
+
+
+                    if (player.isKinematic)
+                    {
+                        speed = slowSpeed;
+                        animator.SetFloat("moveX", -cos);
+                        animator.SetFloat("moveY", -sin);
+                        transform.Translate(-speed * cos, -speed * sin, 0);
+                    }
+                    else
+                    {
+                        animator.SetFloat("moveX", cos);
+                        animator.SetFloat("moveY", sin);
+                        transform.Translate(speed * cos, speed * sin, 0);
+                    }
                     animator.SetBool("moving", true);
-                    transform.Translate(speed * cos, speed * sin, 0);
                 }
                 else
+                {
+
+                    
+
                     animator.SetBool("moving", false);
+                }
             }
 
         }
@@ -110,6 +130,7 @@ public class zombiebehavior : MonoBehaviour
         if (collision.collider.name == "player" || collision.collider.name == "gun" )
         {
 
+
             damage_timer = 0;
 
         }
@@ -123,6 +144,8 @@ public class zombiebehavior : MonoBehaviour
 
         if (collision.collider.name == "player" || collision.collider.name == "gun")
         {
+
+
 
             if (damage_wait <= 0)
             {

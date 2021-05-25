@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,9 +25,9 @@ public class Wearon : MonoBehaviour
             else
             {
                 bulletAmount = value;
-                ammunationtxt.color = Color.green;
+                ammunationtxt.color = Color.yellow;
             }
-                ammunationtxt.text = $"Патроны: {bulletAmount}";
+            ammunationtxt.text = $"Патроны: {bulletAmount}";
         }
         get
         {
@@ -50,28 +48,31 @@ public class Wearon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        float rotateZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-       // transform.rotation = Quaternion.Euler(0f, 0f, rotateZ + offset);
-       center.rotation = Quaternion.Euler(0f, 0f, rotateZ + offset); ;
-        if (timeShot <= 0)
+        if (!PauseMenuScript.GameISPaused)
         {
-            if (Input.GetMouseButtonDown(0) && BulletAmount > 0)
+            Vector2 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            float rotateZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+            // transform.rotation = Quaternion.Euler(0f, 0f, rotateZ + offset);
+
+            center.rotation = Quaternion.Euler(0f, 0f, rotateZ + offset); ;
+            if (timeShot <= 0)
             {
-                Instantiate(shot, shotDirection.position, Quaternion.identity);
-                Instantiate(bullet, shotDirection.position, transform.rotation);
-                timeShot = wait;
-                BulletAmount --;
-               // ammunationtxt.text = $"Ammunation: {bulletAmount}";
-               
+                if (Input.GetMouseButtonDown(0) && BulletAmount > 0)
+                {
+                    Instantiate(shot, shotDirection.position, Quaternion.identity);
+                    Instantiate(bullet, shotDirection.position, transform.rotation);
+                    timeShot = wait;
+                    BulletAmount--;
+                    // ammunationtxt.text = $"Ammunation: {bulletAmount}";
+
+                }
+
+
             }
-
-
+            else
+            {
+                timeShot -= Time.deltaTime;
+            }
         }
-        else
-        {
-            timeShot -= Time.deltaTime;
-        }
-
     }
 }
