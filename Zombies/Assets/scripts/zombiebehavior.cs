@@ -10,6 +10,7 @@ public class zombiebehavior : MonoBehaviour
     public float health = 100;
     public float force = 20;
     public GameObject effect;
+    public GameObject death_effect;
     public playerController pl_contr;
     private float MaxHealth;
     private Rigidbody2D rb;
@@ -28,20 +29,22 @@ public class zombiebehavior : MonoBehaviour
     public float wait = 1;
     bool atacking = false;
 
-    bool dead;
+    //bool dead;
     // Start is called before the first frame update
     void Start()
     {
         MaxHealth = health;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        dead = false;
+     //   dead = false;
         timeShot = 0;
         damage_wait = 0;
         damage_timer = 0;
+
         GameObject pl = GameObject.Find("player");
         pl_contr = pl.GetComponent<playerController>();
         player = pl.GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
@@ -53,21 +56,25 @@ public class zombiebehavior : MonoBehaviour
     {
         if (timeShot <= 0)
         {
-            if (dead)
-                Destroy(gameObject);
-            float x = player.position.x - rb.position.x;
-            float y = player.position.y - rb.position.y;
-            if (Math.Pow(x * x + y * y, 0.5) > 0.5 && Math.Pow(x * x + y * y, 0.5)< distance )
+            //if (dead)
+            //    Destroy(gameObject);
+            if (player != null)
             {
-                float cos = x / (float)Math.Pow(x * x + y * y, 0.5);
-                float sin = y / (float)Math.Pow(x * x + y * y, 0.5);
-                animator.SetFloat("moveX", cos);
-                animator.SetFloat("moveY", sin);
-                animator.SetBool("moving", true);
-                transform.Translate(speed * cos, speed * sin, 0);
+                float x = player.position.x - rb.position.x;
+                float y = player.position.y - rb.position.y;
+                if (Math.Pow(x * x + y * y, 0.5) > 0.5 && Math.Pow(x * x + y * y, 0.5) < distance)
+                {
+                    float cos = x / (float)Math.Pow(x * x + y * y, 0.5);
+                    float sin = y / (float)Math.Pow(x * x + y * y, 0.5);
+                    animator.SetFloat("moveX", cos);
+                    animator.SetFloat("moveY", sin);
+                    animator.SetBool("moving", true);
+                    transform.Translate(speed * cos, speed * sin, 0);
+                }
+                else
+                    animator.SetBool("moving", false);
             }
-            else
-                animator.SetBool("moving", false);
+
         }
         else
         {
@@ -84,16 +91,16 @@ public class zombiebehavior : MonoBehaviour
 
     public void Damage(float damage)
     {
-        Instantiate(effect, transform.position, Quaternion.identity);
         bar.fill = (health - damage) / MaxHealth;
         health -= damage;
         timeShot = wait;
-        if (health <= 0)
+        if ( health <= 0)
         {
-            animator.SetBool("is dead", true);
-            rb.mass = 99999;
-            dead = true;
+            Instantiate(death_effect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
+        else
+            Instantiate(effect, transform.position, Quaternion.identity);
 
     }
 
@@ -119,19 +126,20 @@ public class zombiebehavior : MonoBehaviour
 
             if (damage_wait <= 0)
             {
+
                 damage_wait = damage_wait_wait;
 
                 atacking = true;
                 animator.SetBool("atack", true);
                 if (damage_timer <= 0)
-                {    
+                {
                     pl_contr.Damage(force);
                     atacking = false;
                     damage_timer = damage_timer_wait;
                 }
 
             }
-     
+
         }
     }
 

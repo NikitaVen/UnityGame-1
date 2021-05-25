@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
         {
             zombie.Damage(damage);
         }
-
+        if (!(collision.CompareTag("Bullet") || collision.CompareTag("Heal") ||  collision.gameObject.name == "Death BLood" || collision.gameObject.name == "Blood" || collision.gameObject.name == "shot" || collision.gameObject.name == "player" || collision.gameObject.name == "gun"))  
         DestroyBullet();
     }
     void DestroyBullet()

@@ -170,12 +170,13 @@ MonoBehaviour:
   health: 100
   force: 20
   effect: {fileID: 6279350742394106614, guid: 42df32163f26eaa46b53e01d49ca52a5, type: 3}
+  death_effect: {fileID: 1656348592084922650, guid: a57993685e27cc54a8f5c009228a1da9, type: 3}
   pl_contr: {fileID: 0}
   player: {fileID: 0}
   speed: 0.03
-  damage_wait: 0.5
+  damage_wait: 0
   damage_wait_wait: 0.5
-  damage_timer_wait: 0.5
+  damage_timer_wait: 0.7
   bar: {fileID: 3063616293529198937}
   wait: 1
 --- !u!114 &3063616293529198937

@@ -37,6 +37,8 @@ public class Generator : MonoBehaviour
     public GameObject exitPortalPref;
     public GameObject enemyPref;
     public GameObject ammo;
+    public GameObject redEnemy;
+    public float redChance = 30f;
     public float ammoChance = 20f;
     public GameObject points;
 
@@ -61,11 +63,12 @@ public class Generator : MonoBehaviour
     {
         Vector3Int tilePos = new Vector3Int(x, y, 0);
         Instantiate(exitPortalPref, tilePos, Quaternion.identity);
-        groundMap.SetTile(tilePos, topWallTile);
+        wallMap.SetTile(tilePos, exit);
     }
 
     private void FillWalls()
     {
+
         BoundsInt bounds = groundMap.cellBounds;
         for (int xMap = bounds.xMin - 10; xMap <= bounds.xMax + 10; xMap++)
         {
@@ -85,16 +88,24 @@ public class Generator : MonoBehaviour
                     pitMap.SetTile(pos, pitTile);
                     if (tileBelow != null)
                     {
-                        wallMap.SetTile(pos, topWallTile);
-                        groundMap.SetTile(posBelow, shadowTile);
+
 
 
                         if (!exitspawned)
                         {
-                            wallMap.SetTile(pos, topWallTile);
-                            GenerateSquare(pos.x, pos.y, 1);
-                            GenerateExit(pos.x, pos.y);
+                            wallMap.SetTile(pos, exit);
+                           // GenerateSquare(pos.x, pos.y, 1);
+                            GenerateExit(xMap, yMap);
                             exitspawned = true;
+
+                        }
+                        else
+                        {
+
+                            wallMap.SetTile(pos, topWallTile);
+
+                            groundMap.SetTile(posBelow, shadowTile);
+
                         }
 
 
@@ -107,6 +118,7 @@ public class Generator : MonoBehaviour
                 }
             }
         }
+
     }
 
     private void NewRoute(int x, int y, int routeLength, Vector2Int previousPos)
@@ -128,9 +140,21 @@ public class Generator : MonoBehaviour
                     var point = new Vector3(previousPos.x, previousPos.y, 0);
 
                     if (Mathf.Sqrt(Mathf.Pow((point.x + player.transform.position.x), 2) + Mathf.Pow((point.y + player.transform.position.y), 2)) >= 10)
-                        Instantiate(enemyPref, point, Quaternion.identity);
+                    {
+                        if (Random.Range(1, 100) <= redChance)
+                        {
+                            Instantiate(redEnemy, point, Quaternion.identity);
+                        }
+                        else
+                        {
+                            Instantiate(enemyPref, point, Quaternion.identity);
+                        }
+                    }
                     if (Random.Range(1, 100) <= ammoChance)
+                    {
                         Instantiate(ammo, new Vector3(previousPos.x, previousPos.y, 0), Quaternion.identity);
+
+                    }
                 }
 
                 previousPos = new Vector2Int(x, y);
